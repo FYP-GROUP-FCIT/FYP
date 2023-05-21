@@ -9,6 +9,7 @@ import {
 } from '@nestjs/typeorm';
 import { ConfigEnum } from '@lib/types';
 import * as ORMConfig from './config/orm.config';
+import { MulterModule } from '@nestjs/platform-express';
 
 // config imports files
 import serverConfig from './config/server.config';
@@ -17,6 +18,7 @@ import swaggerConfig from './config/swagger.config';
 // Module imports
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { HiringModule } from './modules/hiring/hiring.module';
 export const typeOrmConfig: TypeOrmModuleOptions = ORMConfig;
 export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -32,9 +34,13 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       load: [serverConfig, swaggerConfig],
     }),
     TypeOrmModule.forRootAsync(TypeOrmAsyncConfig),
+    MulterModule.register({
+      dest: './uploads', // Set the destination directory for uploaded files
+    }),
 
     AuthModule,
     UserModule,
+    HiringModule,
   ],
   controllers: [],
   providers: [],

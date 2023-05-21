@@ -7,16 +7,26 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UserService } from './user.service';
+import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createAuthDto: CreateUserDto) {
-    return this.userService.create(createAuthDto);
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file'))
+  create(
+    @Body() createAuthDto: CreateUserDto,
+    @UploadedFile() file: Express.Multer.File
+  ) {
+    console.log(file, createAuthDto);
+    // return this.userService.create(createAuthDto);
   }
 
   @Get()

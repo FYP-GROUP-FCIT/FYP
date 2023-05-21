@@ -5,10 +5,12 @@ import {
   UpdateDateColumn,
   Index,
   PrimaryGeneratedColumn,
+  OneToOne,
 } from 'typeorm';
 
 import { Uuid } from '@lib/utils';
 import { IUserParams, IUser, UserStatus, UserRole } from '@lib/types';
+import { Hiring } from 'src/modules/hiring/entities/hiring.entity';
 
 @Entity({ name: `user` })
 export class User implements IUser {
@@ -29,7 +31,7 @@ export class User implements IUser {
   @Column({
     length: 30,
     nullable: false,
-    unique: true
+    unique: true,
   })
   userName: string;
 
@@ -69,6 +71,11 @@ export class User implements IUser {
   })
   role: UserRole = UserRole.MEMBER;
 
+  @OneToOne(() => Hiring, (hiring) => hiring.user, {
+    cascade: true,
+  })
+  hiring: Hiring;
+
   @Column()
   @CreateDateColumn()
   readonly createdAt: Date;
@@ -82,7 +89,7 @@ export class User implements IUser {
     this.status = status;
   }
 
-  setPassword(password: string) { 
+  setPassword(password: string) {
     this.password = password;
   }
 
