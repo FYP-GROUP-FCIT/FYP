@@ -8,6 +8,7 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { HiringPhotos } from './hiringPhotos.entity';
 
@@ -19,7 +20,6 @@ export class Hiring {
   @Column({
     length: 30,
     nullable: false,
-    unique: true,
   })
   userName: string;
 
@@ -28,7 +28,7 @@ export class Hiring {
     length: 100,
     nullable: false,
   })
-  readonly email: string;
+  email: string;
 
   @Column({
     length: 30,
@@ -48,10 +48,9 @@ export class Hiring {
   })
   rollNumber: string;
 
-  @OneToOne(() => User, (user) => user.hiring, {
+  @ManyToOne(() => User, (user) => user.hiring, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn()
   user: User;
 
   @OneToOne(() => HiringPhotos, (hiringPhotos) => hiringPhotos.hiring, {

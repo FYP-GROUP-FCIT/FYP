@@ -3,23 +3,27 @@ import { HiringRequestDto } from '@lib/dtos';
 import {
   Body,
   Controller,
+  Inject,
   Post,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { HiringService } from './hiring.service';
+import { GlobalResponseDto } from '@lib/dtos/common';
 
 @ApiTags(SWAGGER_API_TAG.HIRING)
 @Controller('hiring')
 export class HiringController {
+  constructor(private readonly hiringService: HiringService) {}
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('image'))
   @Post('register')
   async register(
     @Body() body: HiringRequestDto,
     @UploadedFile() file: Express.Multer.File
-  ) {
-    console.log(body, file);
+  ): Promise<GlobalResponseDto> {
+    return await this.hiringService.register(body, file);
   }
 }

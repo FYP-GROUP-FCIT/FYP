@@ -19,6 +19,7 @@ import swaggerConfig from './config/swagger.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { HiringModule } from './modules/hiring/hiring.module';
+import { CloudinaryConfigService } from '@config/cloudinary.config';
 export const typeOrmConfig: TypeOrmModuleOptions = ORMConfig;
 export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -34,15 +35,12 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
       load: [serverConfig, swaggerConfig],
     }),
     TypeOrmModule.forRootAsync(TypeOrmAsyncConfig),
-    MulterModule.register({
-      dest: './uploads', // Set the destination directory for uploaded files
-    }),
-
     AuthModule,
     UserModule,
     HiringModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [CloudinaryConfigService],
+  exports: [CloudinaryConfigService],
 })
 export class AppModule {}

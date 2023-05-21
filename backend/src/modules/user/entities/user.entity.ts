@@ -6,6 +6,7 @@ import {
   Index,
   PrimaryGeneratedColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
 
 import { Uuid } from '@lib/utils';
@@ -71,16 +72,14 @@ export class User implements IUser {
   })
   role: UserRole = UserRole.MEMBER;
 
-  @OneToOne(() => Hiring, (hiring) => hiring.user, {
+  @OneToMany(() => Hiring, (hiring) => hiring.user, {
     cascade: true,
   })
   hiring: Hiring;
 
-  @Column()
   @CreateDateColumn()
   readonly createdAt: Date;
 
-  @Column()
   @UpdateDateColumn()
   readonly updatedAt: Date;
 
