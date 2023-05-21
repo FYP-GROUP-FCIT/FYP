@@ -1,10 +1,11 @@
 import { SWAGGER_API_TAG } from '@lib/constants';
-import { HiringRequestDto } from '@lib/dtos';
+import { HiringRequestDto, HiringStatusChangeDto } from '@lib/dtos';
 import {
   Body,
   Controller,
   Inject,
   Post,
+  Put,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -25,5 +26,12 @@ export class HiringController {
     @UploadedFile() file: Express.Multer.File
   ): Promise<GlobalResponseDto> {
     return await this.hiringService.register(body, file);
+  }
+
+  @Put('change-status')
+  async chnageStatus(
+    @Body() body: HiringStatusChangeDto
+  ): Promise<GlobalResponseDto> {
+    return await this.hiringService.changeStatus(body);
   }
 }

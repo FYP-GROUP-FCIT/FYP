@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { HiringRequestDto } from '@lib/dtos';
+import { HiringRequestDto, HiringStatusChangeDto } from '@lib/dtos';
 import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { User } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -7,6 +7,7 @@ import { Hiring } from './entities/hiring.entity';
 import { GlobalResponseDto } from '@lib/dtos/common';
 import { CloudinaryConfigService } from '@config/cloudinary.config';
 import { HiringPhotos } from './entities/hiringPhotos.entity';
+import { HiringStatus } from '@lib/types';
 
 @Injectable()
 export class HiringService {
@@ -32,7 +33,15 @@ export class HiringService {
           'User must be existing User',
           HttpStatus.NOT_FOUND
         );
-
+      const existingHiring = await this.hiringRepository.findOneBy({
+        email,
+        position,
+      });
+      if (existingHiring)
+        throw new HttpException(
+          'User cannot apply for same position more than once!',
+          HttpStatus.CONFLICT
+        );
       const hire = new Hiring();
       hire.userName = userName;
       hire.phoneNumber = phoneNumber;
@@ -55,7 +64,38 @@ export class HiringService {
       return new GlobalResponseDto('Hiring Request Saved!');
     } catch (error) {
       console.log(error.message, error.status);
-      throw new HttpException(error.message, error.status);
+      throw new HttpException(error?.message, error?.status);
+    }
+  }
+
+  public async changeStatus({
+    email,
+    status,
+    position,
+  }: HiringStatusChangeDto): Promise<GlobalResponseDto> {
+    try {
+      const existingHiring = await this.hiringRepository.findOneBy({
+        email,
+        position,
+      });
+      let message = '';
+      if (!existingHiring)
+        throw new HttpException(
+          'Existing User not found!',
+          HttpStatus.NOT_FOUND
+        );
+      if (status === HiringStatus.APPROVED) {
+        existingHiring.status = HiringStatus.APPROVED;
+        message = 'Hiring Approved!';
+      }
+      if (status === HiringStatus.REJECTED) {
+        existingHiring.status = HiringStatus.REJECTED;
+        message = 'Hiring Rejected!';
+      }
+      await this.hiringRepository.save(existingHiring);
+      return new GlobalResponseDto(message);
+    } catch (error) {
+      throw new HttpException(error?.message, error?.status);
     }
   }
 }
