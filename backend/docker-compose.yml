@@ -1,0 +1,17 @@
+version: '3'
+services:
+  fns-dev-db:
+    image: mysql:8.0
+    hostname: localhost
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: fcit
+      MYSQL_PASSWORD: password
+      # MYSQL_USER: root
+    networks:
+      - fns
+networks:
+  fns:
+
