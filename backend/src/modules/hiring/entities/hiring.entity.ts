@@ -11,6 +11,7 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { HiringPhotos } from './hiringPhotos.entity';
+import { HiringStatus } from '@lib/types';
 
 @Entity({ name: `hiring` })
 export class Hiring {
@@ -47,6 +48,14 @@ export class Hiring {
     nullable: false,
   })
   rollNumber: string;
+
+  @Column({
+    type: 'enum',
+    nullable: false,
+    default: HiringStatus.PENDING,
+    enum: HiringStatus,
+  })
+  status: HiringStatus;
 
   @ManyToOne(() => User, (user) => user.hiring, {
     onDelete: 'CASCADE',
