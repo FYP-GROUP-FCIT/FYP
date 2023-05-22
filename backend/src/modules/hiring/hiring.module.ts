@@ -5,10 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Hiring } from './entities/hiring.entity';
 import { User } from '../user/entities/user.entity';
 import { CloudinaryConfigService } from '@config/cloudinary.config';
-import { HiringPhotos } from './entities/hiringPhotos.entity';
+import { HiringTable } from './entities/hiringTable.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Hiring, User, HiringPhotos])],
+  imports: [TypeOrmModule.forFeature([Hiring, User, HiringTable])],
   controllers: [HiringController],
   providers: [HiringService, CloudinaryConfigService],
 })

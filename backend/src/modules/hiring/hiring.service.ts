@@ -10,8 +10,8 @@ import { Repository } from 'typeorm';
 import { Hiring } from './entities/hiring.entity';
 import { GlobalResponseDto } from '@lib/dtos/common';
 import { CloudinaryConfigService } from '@config/cloudinary.config';
-import { HiringPhotos } from './entities/hiringPhotos.entity';
 import { HiringStatus } from '@lib/types';
+import { HiringTable } from './entities/hiringTable.entity';
 
 @Injectable()
 export class HiringService {
@@ -19,8 +19,8 @@ export class HiringService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     @InjectRepository(Hiring)
     private readonly hiringRepository: Repository<Hiring>,
-    @InjectRepository(HiringPhotos)
-    private readonly hiringPhotoRepository: Repository<HiringPhotos>,
+    @InjectRepository(HiringTable)
+    private readonly hiringTableRepository: Repository<HiringTable>,
     @Inject(CloudinaryConfigService)
     private readonly cloudinaryConfigService: CloudinaryConfigService
   ) {}
@@ -53,17 +53,14 @@ export class HiringService {
       hire.position = position;
       hire.user = existingUser;
       hire.email = email;
-      await this.hiringRepository.save(hire);
       if (file) {
-        const photo = new HiringPhotos();
         const result: any = await this.cloudinaryConfigService.uploadImage(
           file,
           'hiring'
         );
         const url = result?.url;
-        photo.hiring = hire;
-        photo.photos = url;
-        await this.hiringPhotoRepository.save(photo);
+        hire.photos = url;
+        await this.hiringRepository.save(hire);
       }
       return new GlobalResponseDto('Hiring Request Saved!');
     } catch (error) {
@@ -107,18 +104,33 @@ export class HiringService {
     setting,
   }: ShowHiringDto): Promise<GlobalResponseDto> {
     try {
+      const existingHiring = await this.hiringTableRepository.findOneBy({
+        enable: false,
+      });
       let message = '';
 
       if (setting) {
+        await this.hiringTableRepository.update(
+          { enable: false },
+          { enable: setting }
+        );
         message = 'Hiring Enabled!';
       }
       if (setting === false) {
+        await this.hiringTableRepository.update(
+          { enable: true },
+          { enable: setting }
+        );
         message = 'Hiring Disabled!';
       }
-      //   await this.hiringRepository.save(existingHiring);
       return new GlobalResponseDto(message);
     } catch (error) {
       throw new HttpException(error?.message, error?.status);
     }
+  }
+  async mockHiringTable() {
+    const hiringTable = new HiringTable();
+    hiringTable.enable = false;
+    await this.hiringTableRepository.save(hiringTable);
   }
 }

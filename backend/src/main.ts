@@ -5,15 +5,18 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder } from '@nestjs/swagger';
 import { ConfigEnum, IServerConfig, ISwaggerConfig } from '@lib/types';
+import { HiringService } from './modules/hiring/hiring.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger('Bootstrap');
 
   const configService = app.get<ConfigService>(ConfigService);
+  const hiringService = app.get<HiringService>(HiringService);
+  await hiringService.mockHiringTable();
 
   const { port: SERVER_PORT } = configService.get<IServerConfig>(
-    ConfigEnum.SERVER,
+    ConfigEnum.SERVER
   );
 
   const swaggerConfig = configService.get<ISwaggerConfig>(ConfigEnum.SWAGGER);

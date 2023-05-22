@@ -6,11 +6,8 @@ import {
   UpdateDateColumn,
   Index,
   PrimaryGeneratedColumn,
-  OneToOne,
-  JoinColumn,
   ManyToOne,
 } from 'typeorm';
-import { HiringPhotos } from './hiringPhotos.entity';
 import { HiringStatus } from '@lib/types';
 
 @Entity({ name: `hiring` })
@@ -62,10 +59,8 @@ export class Hiring {
   })
   user: User;
 
-  @OneToOne(() => HiringPhotos, (hiringPhotos) => hiringPhotos.hiring, {
-    cascade: true,
-  })
-  hiringPhotos: HiringPhotos;
+  @Column()
+  photos: string;
   @CreateDateColumn()
   readonly createdAt: Date;
 
