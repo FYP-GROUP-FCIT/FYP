@@ -104,9 +104,6 @@ export class HiringService {
     setting,
   }: ShowHiringDto): Promise<GlobalResponseDto> {
     try {
-      const existingHiring = await this.hiringTableRepository.findOneBy({
-        enable: false,
-      });
       let message = '';
 
       if (setting) {

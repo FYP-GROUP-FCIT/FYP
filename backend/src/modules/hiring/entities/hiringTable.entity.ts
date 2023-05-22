@@ -10,8 +10,4 @@ export class HiringTable {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timestamp: Date;
-
-  setShowHiding(enable: boolean) {
-    this.enable = enable;
-  }
 }
