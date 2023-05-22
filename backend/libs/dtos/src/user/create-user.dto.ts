@@ -1,4 +1,4 @@
-import { UserStatus, IUser, UserRole } from '@lib/types';
+import { UserStatusEnum, UserRoleEnum } from '@lib/types';
 import { UploadedFile } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
@@ -54,14 +54,14 @@ export class CreateUserDto {
 
   @ApiProperty({ type: 'string', required: false })
   @IsOptional()
-  @IsEnum(UserStatus)
-  status?: UserStatus;
+  @IsEnum(UserStatusEnum)
+  status?: UserStatusEnum;
 
   @ApiProperty({ type: 'string', required: false })
   @IsString()
   @IsOptional()
-  @IsEnum(UserRole)
-  role?: UserRole;
+  @IsEnum(UserRoleEnum)
+  role?: UserRoleEnum;
 
   @ApiProperty({ type: 'file', required: false })
   @Type(() => UploadedFile)

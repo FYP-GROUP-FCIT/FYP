@@ -1,4 +1,4 @@
-import { UserStatus, IUser, UserRole } from '@lib/types';
+import { UserStatusEnum, IUser, UserRole } from '@lib/types';
 import { Uuid } from '@lib/utils';
 
 export class UserDto {

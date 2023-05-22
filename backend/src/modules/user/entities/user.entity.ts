@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 import { Uuid } from '@lib/utils';
-import { IUserParams, IUser, UserStatus, UserRole } from '@lib/types';
+import { IUserParams, IUser, UserStatusEnum, UserRoleEnum } from '@lib/types';
 import { Hiring } from 'src/modules/hiring/entities/hiring.entity';
 
 @Entity({ name: `user` })
@@ -60,17 +60,17 @@ export class User implements IUser {
 
   @Column({
     type: `enum`,
-    enum: UserStatus,
-    default: UserStatus.INACTIVE,
+    enum: UserStatusEnum,
+    default: UserStatusEnum.INACTIVE,
   })
-  status: UserStatus = UserStatus.INACTIVE;
+  status: UserStatusEnum = UserStatusEnum.INACTIVE;
 
   @Column({
     type: `enum`,
-    enum: UserRole,
-    default: UserRole.MEMBER,
+    enum: UserRoleEnum,
+    default: UserRoleEnum.MEMBER,
   })
-  role: UserRole = UserRole.MEMBER;
+  role: UserRoleEnum = UserRoleEnum.MEMBER;
 
   @OneToMany(() => Hiring, (hiring) => hiring.user, {
     cascade: true,
@@ -84,7 +84,7 @@ export class User implements IUser {
   readonly updatedAt: Date;
 
   // Methods
-  setStatus(status: UserStatus) {
+  setStatus(status: UserStatusEnum) {
     this.status = status;
   }
 

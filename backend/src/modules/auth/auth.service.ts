@@ -1,21 +1,19 @@
-import {Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { User } from './../user/entities/user.entity';
 import { AuthHelper } from './auth.helper';
-import {
-  Request,
-  HttpStatus,
-  HttpException,
-} from '@nestjs/common';
-import { UserService } from '../user/user.service';
+import { Request, HttpStatus, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserRole, UserStatus } from '@lib/types';
+import { UserRoleEnum, UserStatusEnum } from '@lib/types';
 import { AuthorizeResponseDto } from '@lib/dtos';
 @Injectable()
 export class AuthService {
-  constructor(@InjectRepository(User) private repository:Repository<User>,private authHelper:AuthHelper){}
-  async login(@Request() req){
-    const {email,firstName,lastName,userName}=req.user
+  constructor(
+    @InjectRepository(User) private repository: Repository<User>,
+    private authHelper: AuthHelper
+  ) {}
+  async login(@Request() req) {
+    const { email, firstName, lastName, userName } = req.user;
     const user: User = await this.repository.findOne({
       where: {
         email,
@@ -30,8 +28,8 @@ export class AuthService {
       });
       await this.repository.save(newUser);
       if (
-        newUser.role === UserRole.MEMBER &&
-        newUser.status === UserStatus.INACTIVE
+        newUser.role === UserRoleEnum.MEMBER &&
+        newUser.status === UserStatusEnum.INACTIVE
       ) {
         throw new HttpException('User needs approval!', HttpStatus.NOT_FOUND);
       }
@@ -39,18 +37,18 @@ export class AuthService {
     }
     if (
       !user ||
-      (user.role === UserRole.MEMBER &&
-        user.status === UserStatus.DEACTIVATE)
+      (user.role === UserRoleEnum.MEMBER &&
+        user.status === UserStatusEnum.DEACTIVATE)
     ) {
       throw new HttpException('No user found', HttpStatus.NOT_FOUND);
     }
     if (
-      user.role === UserRole.MEMBER &&
-      user.status === UserStatus.INACTIVE
+      user.role === UserRoleEnum.MEMBER &&
+      user.status === UserStatusEnum.INACTIVE
     ) {
       throw new HttpException('User needs approval!', HttpStatus.NOT_FOUND);
     }
-    const token=this.authHelper.token(user);
-    return new AuthorizeResponseDto(user,token);
+    const token = this.authHelper.token(user);
+    return new AuthorizeResponseDto(user, token);
   }
 }

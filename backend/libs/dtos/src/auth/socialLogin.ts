@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { SocialProvider } from '@lib/types';
+import { SocialProviderEnum } from '@lib/types';
 
 export class SocialLoginRequestDto {
   @IsString()
@@ -7,6 +7,6 @@ export class SocialLoginRequestDto {
   accessToken: string;
 
   @IsNotEmpty()
-  @IsEnum(SocialProvider)
-  socialProvider: SocialProvider;
+  @IsEnum(SocialProviderEnum)
+  socialProvider: SocialProviderEnum;
 }

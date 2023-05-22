@@ -1,19 +1,19 @@
 import { Uuid } from '@lib/utils';
 
-export enum UserStatus {
+export enum UserStatusEnum {
   ACTIVE = `ACTIVE`,
   INACTIVE = `INACTIVE`,
   DEACTIVATE = `DEACTIVATE`,
 }
 
-export enum UserRole {
+export enum UserRoleEnum {
   ADMIN = `ADMIN`,
   PRESIDENT = `PRESIDENT`,
   COORDINATOR = `COORDINATOR`,
   MEMBER = `MEMBER`,
 }
 
-export enum SocialProvider {
+export enum SocialProviderEnum {
   GOOGLE = `google`,
   FACEBOOK = `FACEBOOK`,
 }
@@ -26,8 +26,8 @@ export interface IUser {
   email: string;
   password?: string;
   salt?: string;
-  status?: UserStatus;
-  role?: UserRole;
+  status?: UserStatusEnum;
+  role?: UserRoleEnum;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -37,5 +37,5 @@ export interface IUserParams {
   lastName: string;
   email: string;
   userName: string;
-  status?: UserStatus;
+  status?: UserStatusEnum;
 }

@@ -11,12 +11,16 @@ import {
   Post,
   Put,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { HiringService } from './hiring.service';
 import { GlobalResponseDto } from '@lib/dtos/common';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
+import { RolesGuard } from 'src/guards/roles.guard';
+import { UserRole, UserRoleEnum } from '@lib/types';
 
 @ApiTags(SWAGGER_API_TAG.HIRING)
 @Controller('hiring')
@@ -39,6 +43,9 @@ export class HiringController {
     return await this.hiringService.changeStatus(body);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UserRole(UserRoleEnum.ADMIN)
+  @ApiBearerAuth()
   @Put('show-hiring')
   async showHideHiring(
     @Body() body: ShowHiringDto

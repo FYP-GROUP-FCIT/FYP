@@ -20,6 +20,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { HiringModule } from './modules/hiring/hiring.module';
 import { CloudinaryConfigService } from '@config/cloudinary.config';
+import jwtConfig from '@config/jwtConfig';
 export const typeOrmConfig: TypeOrmModuleOptions = ORMConfig;
 export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -32,7 +33,8 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [serverConfig, swaggerConfig],
+      envFilePath: '.env',
+      load: [serverConfig, swaggerConfig, jwtConfig],
     }),
     TypeOrmModule.forRootAsync(TypeOrmAsyncConfig),
     AuthModule,
