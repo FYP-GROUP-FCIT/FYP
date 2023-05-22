@@ -6,6 +6,11 @@ export class HiringStatusChangeDto {
   @ApiProperty({ type: String, required: true })
   @IsNotEmpty()
   @IsString()
+  userId: string;
+
+  @ApiProperty({ type: String, required: true })
+  @IsNotEmpty()
+  @IsString()
   email: string;
 
   @ApiProperty({ required: true, description: 'Approved' })

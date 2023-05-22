@@ -1,5 +1,9 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { HiringRequestDto, HiringStatusChangeDto } from '@lib/dtos';
+import {
+  HiringRequestDto,
+  HiringStatusChangeDto,
+  ShowHiringDto,
+} from '@lib/dtos';
 import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common';
 import { User } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -93,6 +97,25 @@ export class HiringService {
         message = 'Hiring Rejected!';
       }
       await this.hiringRepository.save(existingHiring);
+      return new GlobalResponseDto(message);
+    } catch (error) {
+      throw new HttpException(error?.message, error?.status);
+    }
+  }
+
+  public async showHideHiring({
+    setting,
+  }: ShowHiringDto): Promise<GlobalResponseDto> {
+    try {
+      let message = '';
+
+      if (setting) {
+        message = 'Hiring Enabled!';
+      }
+      if (setting === false) {
+        message = 'Hiring Disabled!';
+      }
+      //   await this.hiringRepository.save(existingHiring);
       return new GlobalResponseDto(message);
     } catch (error) {
       throw new HttpException(error?.message, error?.status);

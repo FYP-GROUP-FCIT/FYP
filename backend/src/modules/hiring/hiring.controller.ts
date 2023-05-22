@@ -1,5 +1,9 @@
 import { SWAGGER_API_TAG } from '@lib/constants';
-import { HiringRequestDto, HiringStatusChangeDto } from '@lib/dtos';
+import {
+  HiringRequestDto,
+  HiringStatusChangeDto,
+  ShowHiringDto,
+} from '@lib/dtos';
 import {
   Body,
   Controller,
@@ -29,9 +33,16 @@ export class HiringController {
   }
 
   @Put('change-status')
-  async chnageStatus(
+  async changeStatus(
     @Body() body: HiringStatusChangeDto
   ): Promise<GlobalResponseDto> {
     return await this.hiringService.changeStatus(body);
+  }
+
+  @Put('show-hiring')
+  async showHideHiring(
+    @Body() body: ShowHiringDto
+  ): Promise<GlobalResponseDto> {
+    return await this.hiringService.showHideHiring(body);
   }
 }
