@@ -21,6 +21,9 @@ import { UserModule } from './modules/user/user.module';
 import { HiringModule } from './modules/hiring/hiring.module';
 import { CloudinaryConfigService } from '@config/cloudinary.config';
 import jwtConfig from '@config/jwtConfig';
+import { RegistrationModule } from './modules/team-registration/registration.module';
+import { FixturesModule } from './modules/fixtures/fixtures.module';
+import { AddFixturesModule } from './modules/add-fixtures/add-fixtures.module';
 export const typeOrmConfig: TypeOrmModuleOptions = ORMConfig;
 export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -40,9 +43,12 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     AuthModule,
     UserModule,
     HiringModule,
+    RegistrationModule,
+    FixturesModule,
+    AddFixturesModule,
   ],
   controllers: [],
   providers: [CloudinaryConfigService],
   exports: [CloudinaryConfigService],
 })
-export class AppModule {}
+export class AppModule { }

@@ -12,4 +12,4 @@ import { HiringTable } from './entities/hiringTable.entity';
   controllers: [HiringController],
   providers: [HiringService, CloudinaryConfigService],
 })
-export class HiringModule {}
+export class HiringModule { }
