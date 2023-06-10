@@ -16,7 +16,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post()
   @ApiConsumes('multipart/form-data')
@@ -26,7 +26,7 @@ export class UserController {
     @UploadedFile() file: Express.Multer.File
   ) {
     // console.log(file, createAuthDto);
-    // return this.userService.create(createAuthDto);
+    return this.userService.create(createAuthDto);
   }
 
   @Get()

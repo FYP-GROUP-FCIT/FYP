@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Result } from 'src/modules/results/entites/results.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class MatchFixture {
@@ -20,4 +21,8 @@ export class MatchFixture {
     @Column({ type: 'time' })
     time: string;
 
+    @OneToOne(() => Result, result => result.fixture)
+    result?: Result;
+
 }
+

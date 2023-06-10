@@ -27,7 +27,7 @@ export class User implements IUser {
   // PrimaryGeneratedColumn decorator create error it store in uuid but return string
   // which cause in cassandra that's why we are using transformer feature
   @PrimaryGeneratedColumn(`uuid`)
-  readonly id: string;
+  readonly id: number;
 
   @Column({
     length: 30,
