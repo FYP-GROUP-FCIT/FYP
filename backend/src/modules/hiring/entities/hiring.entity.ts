@@ -54,7 +54,7 @@ export class Hiring {
   })
   status: HiringStatus;
 
-  @ManyToOne(() => User, (user) => user.hiring, {
+  @ManyToOne(() => User, {
     onDelete: 'CASCADE',
   })
   user: User;

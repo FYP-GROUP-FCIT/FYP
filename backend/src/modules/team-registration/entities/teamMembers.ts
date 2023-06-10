@@ -1,18 +1,17 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { RegistrationEntity } from "./team-entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Registration } from './team-entity';
 
 @Entity()
 export class TeamMember {
+  @PrimaryGeneratedColumn()
+  id: string;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column()
+  rollNumber: string;
 
-    @Column()
-    RollNumber: string;
+  @Column()
+  name: string;
 
-    @Column()
-    name: string;
-
-    @ManyToOne(() => RegistrationEntity, team => team.members)
-    team: RegistrationEntity;
+  @ManyToOne(() => Registration, { onDelete: 'CASCADE' })
+  team: Registration;
 }

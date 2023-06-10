@@ -24,6 +24,7 @@ import jwtConfig from '@config/jwtConfig';
 import { RegistrationModule } from './modules/team-registration/registration.module';
 import { FixturesModule } from './modules/fixtures/fixtures.module';
 import { AddFixturesModule } from './modules/add-fixtures/add-fixtures.module';
+import { SportsModule } from './modules/sports/sports.module';
 export const typeOrmConfig: TypeOrmModuleOptions = ORMConfig;
 export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -46,9 +47,10 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     RegistrationModule,
     FixturesModule,
     AddFixturesModule,
+    SportsModule,
   ],
   controllers: [],
   providers: [CloudinaryConfigService],
   exports: [CloudinaryConfigService],
 })
-export class AppModule { }
+export class AppModule {}
