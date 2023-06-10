@@ -27,6 +27,7 @@ const ORMConfig: TypeOrmModuleOptions = {
   synchronize: true,
   entities: [ENTITIES_DIR],
   autoLoadEntities: true,
+  dropSchema: false,
   migrations: [MIGRATIONS_DIR],
 };
 module.exports = ORMConfig;

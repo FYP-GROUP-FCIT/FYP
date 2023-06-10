@@ -1,29 +1,17 @@
-import { Controller, Get } from "@nestjs/common";
-import { MatchFixtureDto } from "./DTO/fixture-dto";
-import { FixturesService } from "./fixtures.service";
-
-
-
-
+import { SWAGGER_API_TAG } from '@lib/constants';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { MatchFixtureDto } from './DTO/fixture-dto';
+import { FixturesService } from './fixtures.service';
+import { ApiTags } from '@nestjs/swagger';
+import { MatchFixture } from './entites/fixture-entity';
+@ApiTags(SWAGGER_API_TAG.FIXTURES)
+@UseGuards()
 @Controller('fixtures')
 export class FixturesController {
+  constructor(private readonly matchFixtureService: FixturesService) {}
 
-    constructor(private readonly matchFixtureService: FixturesService) { }
-
-    @Get()
-    async getFixtures(): Promise<MatchFixtureDto[]> {
-        const fixtures = await this.matchFixtureService.getCurrentAndNextDayFixtures();
-        return fixtures.map(fixture => ({
-            MatchNo: fixture.MatchNo,
-            TeamA: fixture.TeamA,
-            TeamB: fixture.TeamB,
-            Venue: fixture.Venue,
-            date: fixture.date,
-            time: fixture.time,
-        }));
-        //console.log(fixtures);
-        //return fixtures;
-    }
-
+  @Get()
+  async getFixtures(): Promise<MatchFixture[]> {
+    return await this.matchFixtureService.getCurrentAndNextDayFixtures();
+  }
 }
-

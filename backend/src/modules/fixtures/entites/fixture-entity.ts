@@ -2,22 +2,21 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class MatchFixture {
-    @PrimaryGeneratedColumn()
-    MatchNo: number;
+  @PrimaryGeneratedColumn()
+  MatchNo: string;
 
-    @Column()
-    TeamA: string;
+  @Column()
+  TeamA: string;
 
-    @Column()
-    TeamB: string;
+  @Column()
+  TeamB: string;
 
-    @Column()
-    Venue: string;
+  @Column()
+  Venue: string;
 
-    @Column({ type: 'date' })
-    date: Date;
+  @Column({ type: 'date' })
+  date: Date;
 
-    @Column({ type: 'time' })
-    time: string;
-
+  @Column({ type: 'time' })
+  time: string;
 }
