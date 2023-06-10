@@ -6,8 +6,8 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { SWAGGER_API_TAG } from '@lib/constants';
 import { JwtAuthGuard, RolesGuard } from 'src/guards';
 
-@UseGuards(JwtAuthGuard, RolesGuard)
 @ApiTags(SWAGGER_API_TAG.ADDFIXTURES)
+@UseGuards(JwtAuthGuard, RolesGuard)
 @UserRole(UserRoleEnum.COORDINATOR)
 @ApiBearerAuth()
 @Controller('fixtures/add-fixtures')

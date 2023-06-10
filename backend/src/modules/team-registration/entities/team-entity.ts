@@ -1,29 +1,32 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { TeamMember } from './teamMembers';
+import { TeamRegistrationStatus } from '@lib/types/db/entities/team';
 
 @Entity('registration')
-export class RegistrationEntity {
-    @PrimaryGeneratedColumn()
-    readonly id: number;
+export class Registration {
+  @PrimaryGeneratedColumn()
+  readonly id: string;
 
-    @Column({ unique: true })
-    Teamname: string;
+  @Column()
+  teamName: string;
 
-    @Column()
-    captainName: string;
+  @Column()
+  captainName: string;
 
-    @Column()
-    phoneNumber: string;
+  @Column()
+  phoneNumber: string;
 
-    @Column()
-    address: string;
+  @Column()
+  address: string;
 
-    @OneToMany(() => TeamMember, teamMember => teamMember.team)
-    members: TeamMember[];
+  @OneToMany(() => TeamMember, (teamMember) => teamMember.team, {
+    cascade: true,
+  })
+  members: TeamMember[];
 
-    @Column({ type: 'blob', default: null })
-    image: Buffer;
+  @Column({ default: null })
+  image: string;
 
-    @Column({ default: 'pending' })
-    status: string;
+  @Column({ default: TeamRegistrationStatus.PENDING })
+  status: TeamRegistrationStatus;
 }

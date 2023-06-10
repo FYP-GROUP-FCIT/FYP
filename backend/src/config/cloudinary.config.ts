@@ -13,7 +13,8 @@ export class CloudinaryConfigService {
   }
 
   async uploadImage(file, folderName: string) {
-    return new Promise((resolve, reject) => {
+    // ret÷urn
+    const h = new Promise((resolve, reject) => {
       const streamify = new Readable();
       streamify._read = () => {
         streamify.push(file.buffer);
@@ -31,5 +32,6 @@ export class CloudinaryConfigService {
         })
       );
     });
+    console.log(h);
   }
 }

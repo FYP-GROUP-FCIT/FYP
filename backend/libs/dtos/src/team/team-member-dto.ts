@@ -1,11 +1,14 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class TeamMemberDto {
-    @IsString()
-    @IsNotEmpty()
-    name: string;
+  @ApiProperty({ type: 'string', required: true })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
-    @IsString()
-    @IsNotEmpty()
-    rollNo: string;
+  @ApiProperty({ type: 'string', required: true })
+  @IsString()
+  @IsNotEmpty()
+  rollNo: string;
 }
