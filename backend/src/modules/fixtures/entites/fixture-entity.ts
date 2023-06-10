@@ -14,16 +14,16 @@ import {
 @Entity()
 export class MatchFixture {
   @PrimaryGeneratedColumn()
-  MatchNo: string;
+  matchNo: number;
 
   @Column()
-  TeamA: string;
+  teamA: string;
 
   @Column()
-  TeamB: string;
+  teamB: string;
 
   @Column()
-  Venue: string;
+  venue: string;
 
   @Column({ type: 'date' })
   date: Date;
@@ -31,7 +31,7 @@ export class MatchFixture {
   @Column({ type: 'time' })
   time: string;
 
-  @OneToOne(() => Result, (result) => result.fixture)
+  @OneToOne(() => Result, (result) => result.fixture, { eager: true })
   result?: Result;
 
   @ManyToOne(() => Sports, {

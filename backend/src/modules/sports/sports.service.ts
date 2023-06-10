@@ -36,7 +36,13 @@ export class SportsService {
 
   public async getSports(): Promise<Sports[]> {
     return await this.sportsRepo.find({
-      relations: ['teams', 'matches'],
+      relations: [
+        'teams',
+        'matches',
+        'result',
+        'result.winnerTeam',
+        'result.loserTeam',
+      ],
     });
   }
 

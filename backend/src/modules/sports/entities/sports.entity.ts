@@ -13,6 +13,7 @@ import { HiringStatus } from '@lib/types';
 import { SportsTypeEnum } from '@lib/types/db/entities/sports';
 import { MatchFixture } from 'src/modules/fixtures/entites/fixture-entity';
 import { Registration } from 'src/modules/team-registration/entities/team-entity';
+import { Result } from 'src/modules/results/entites/results.entity';
 
 @Entity({ name: `sports` })
 export class Sports {
@@ -56,6 +57,11 @@ export class Sports {
     cascade: true,
   })
   teams: Registration[];
+
+  @OneToMany(() => Result, (result) => result.sport, {
+    cascade: true,
+  })
+  result: Result[];
 
   @CreateDateColumn()
   readonly createdAt: Date;

@@ -4,10 +4,11 @@ import { ResultsService } from './results.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MatchFixture } from '../fixtures/entites/fixture-entity';
 import { Result } from './entites/results.entity';
+import { Registration } from '../team-registration/entities/team-entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MatchFixture, Result])],
+  imports: [TypeOrmModule.forFeature([MatchFixture, Result, Registration])],
   controllers: [ResultsController],
-  providers: [ResultsService]
+  providers: [ResultsService],
 })
-export class ResultsModule { }
+export class ResultsModule {}

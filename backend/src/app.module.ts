@@ -25,6 +25,7 @@ import { RegistrationModule } from './modules/team-registration/registration.mod
 import { FixturesModule } from './modules/fixtures/fixtures.module';
 import { AddFixturesModule } from './modules/add-fixtures/add-fixtures.module';
 import { SportsModule } from './modules/sports/sports.module';
+import { ResultsModule } from './modules/results/results.module';
 export const typeOrmConfig: TypeOrmModuleOptions = ORMConfig;
 export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -48,6 +49,7 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     FixturesModule,
     AddFixturesModule,
     SportsModule,
+    ResultsModule,
   ],
   controllers: [],
   providers: [CloudinaryConfigService],

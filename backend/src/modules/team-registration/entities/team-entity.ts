@@ -11,6 +11,7 @@ import {
 import { TeamMember } from './teamMembers';
 import { TeamRegistrationStatus } from '@lib/types/db/entities/team';
 import { Sports } from 'src/modules/sports/entities/sports.entity';
+import { Result } from 'src/modules/results/entites/results.entity';
 
 @Entity('registration')
 export class Registration {
@@ -39,6 +40,11 @@ export class Registration {
     onUpdate: 'CASCADE',
   })
   sport: Sports;
+
+  @OneToMany(() => Result, (result) => result.winnerTeam, {
+    cascade: true,
+  })
+  result: Result;
 
   @Column({ default: null })
   image: string;
