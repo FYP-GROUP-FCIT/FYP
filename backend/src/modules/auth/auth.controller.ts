@@ -1,3 +1,4 @@
+import { SWAGGER_API_TAG } from '@lib/constants';
 import { User } from './../user/entities/user.entity';
 import { GoogleOAuthGuard } from './../../guards/google.guards';
 import { Controller, Get, UseGuards, Request } from '@nestjs/common';
@@ -5,7 +6,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthService } from './auth.service';
 import { LoginRequestDto } from '@lib/dtos';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags(SWAGGER_API_TAG.AUTH)
 @Controller('auth')
 export class AuthController {
   constructor(

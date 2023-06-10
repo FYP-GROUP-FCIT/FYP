@@ -1,3 +1,4 @@
+import { SWAGGER_API_TAG } from '@lib/constants';
 import { CreateUserDto, UpdateUserDto } from '@lib/dtos';
 import {
   Controller,
@@ -11,9 +12,9 @@ import {
   UploadedFile,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
-
+@ApiTags(SWAGGER_API_TAG.USER)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
