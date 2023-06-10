@@ -5,9 +5,10 @@ import { Registration } from './entities/team-entity';
 import { TeamMember } from './entities/teamMembers';
 import { RegistrationService } from './registration.service';
 import { CloudinaryConfigService } from '@config/cloudinary.config';
+import { Sports } from '../sports/entities/sports.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Registration, TeamMember])],
+  imports: [TypeOrmModule.forFeature([Registration, TeamMember, Sports])],
   controllers: [RegistrationController],
   providers: [RegistrationService, CloudinaryConfigService],
 })

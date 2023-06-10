@@ -7,9 +7,9 @@ import { SWAGGER_API_TAG } from '@lib/constants';
 import { JwtAuthGuard, RolesGuard } from 'src/guards';
 
 @ApiTags(SWAGGER_API_TAG.ADDFIXTURES)
-@UseGuards(JwtAuthGuard, RolesGuard)
-@UserRole(UserRoleEnum.COORDINATOR)
-@ApiBearerAuth()
+// @UseGuards(JwtAuthGuard, RolesGuard)
+// @UserRole(UserRoleEnum.COORDINATOR)
+// @ApiBearerAuth()
 @Controller('fixtures/add-fixtures')
 export class AddFixturesController {
   constructor(private readonly addFixturesService: AddFixturesService) {}

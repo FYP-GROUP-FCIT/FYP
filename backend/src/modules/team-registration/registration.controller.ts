@@ -7,6 +7,7 @@ import {
   InternalServerErrorException,
   Param,
   Post,
+  Put,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -18,6 +19,7 @@ import { validate } from 'class-validator';
 import { TeamRegistrationStatus } from '@lib/types/db/entities/team';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { GlobalResponseDto } from '@lib/dtos/common';
+import { UpdateRegistrationStatusDto } from '@lib/dtos';
 
 @ApiTags(SWAGGER_API_TAG.REGISTRATION)
 @Controller('registration')
@@ -38,10 +40,15 @@ export class RegistrationController {
     @Body() createTeamDto: CreateTeamDto,
     @UploadedFile() paymentImage: Express.Multer.File
   ): Promise<GlobalResponseDto> {
-    console.log(createTeamDto);
     return await this.registrationService.EnterTeam(
       createTeamDto,
       paymentImage
     );
+  }
+  @Put('/status')
+  async updateStatus(
+    @Body() updateTeamStatusDto: UpdateRegistrationStatusDto
+  ): Promise<GlobalResponseDto> {
+    return await this.registrationService.updateStatus(updateTeamStatusDto);
   }
 }

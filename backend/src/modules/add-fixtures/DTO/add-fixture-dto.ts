@@ -32,4 +32,9 @@ export class CreateMatchFixtureDto {
   @IsTimeFormat()
   @IsNotEmpty()
   time: string;
+
+  @ApiProperty({ type: 'string', example: 'cricket', required: true })
+  @IsString()
+  @IsNotEmpty()
+  sports: string;
 }

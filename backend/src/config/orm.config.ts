@@ -24,7 +24,7 @@ const ORMConfig: TypeOrmModuleOptions = {
   username: process.env.DB_USERNAME || 'root',
   password: process.env.DB_PASSWORD || 'password',
   database: process.env.DB_DATABASE || 'fcit',
-  synchronize: true,
+  synchronize: false,
   entities: [ENTITIES_DIR],
   autoLoadEntities: true,
   dropSchema: false,

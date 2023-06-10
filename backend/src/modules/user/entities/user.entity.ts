@@ -12,6 +12,7 @@ import {
 import { Uuid } from '@lib/utils';
 import { IUserParams, IUser, UserStatusEnum, UserRoleEnum } from '@lib/types';
 import { Hiring } from 'src/modules/hiring/entities/hiring.entity';
+import { Sports } from 'src/modules/sports/entities/sports.entity';
 
 @Entity({ name: `user` })
 export class User implements IUser {

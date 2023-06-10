@@ -1,11 +1,21 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToMany,
+  ManyToOne,
+} from 'typeorm';
 import { TeamMember } from './teamMembers';
 import { TeamRegistrationStatus } from '@lib/types/db/entities/team';
+import { Sports } from 'src/modules/sports/entities/sports.entity';
 
 @Entity('registration')
 export class Registration {
-  @PrimaryGeneratedColumn()
-  readonly id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   teamName: string;
@@ -24,9 +34,22 @@ export class Registration {
   })
   members: TeamMember[];
 
+  @ManyToOne(() => Sports, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  sport: Sports;
+
   @Column({ default: null })
   image: string;
 
   @Column({ default: TeamRegistrationStatus.PENDING })
   status: TeamRegistrationStatus;
+
+  @CreateDateColumn()
+  readonly createdAt: Date;
+
+  @Column()
+  @UpdateDateColumn()
+  readonly updatedAt: Date;
 }

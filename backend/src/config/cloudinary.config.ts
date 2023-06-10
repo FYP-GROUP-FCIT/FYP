@@ -6,15 +6,15 @@ import { Readable } from 'stream';
 export class CloudinaryConfigService {
   constructor() {
     v2.config({
-      cloud_name: process.env.CLOUD_NAME,
-      api_key: process.env.API_KEY,
-      api_secret: process.env.API_SECRET,
+      cloud_name: process.env.CLOUD_NAME || 'dsnukqjun',
+      api_key: process.env.API_KEY || '262926798515183',
+      api_secret: process.env.API_SECRET || 'IaQ8SP4sVGXnxyxlddaLQS67wXM',
     });
   }
 
   async uploadImage(file, folderName: string) {
-    // ret÷urn
-    const h = new Promise((resolve, reject) => {
+    //  console.log(object) file.mimetype.split('/')[1];
+    return new Promise((resolve, reject) => {
       const streamify = new Readable();
       streamify._read = () => {
         streamify.push(file.buffer);
@@ -32,6 +32,5 @@ export class CloudinaryConfigService {
         })
       );
     });
-    console.log(h);
   }
 }

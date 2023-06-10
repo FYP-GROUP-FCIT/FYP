@@ -10,6 +10,7 @@ import { TeamMemberDto } from './team-member-dto';
 import { Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 import { UploadedFile } from '@nestjs/common';
+import { Sports } from 'src/modules/sports/entities/sports.entity';
 
 export class CreateTeamDto {
   @ApiProperty({ type: 'string', required: true })
@@ -33,14 +34,19 @@ export class CreateTeamDto {
   @IsNotEmpty()
   address: string;
 
-  //   @ApiProperty({ type: [TeamMemberDto], required: false })
+  //   @ApiProperty({ type: [TeamMemberDto], required: true })
   //   @IsArray()
   //   @IsNotEmpty()
   //   @ValidateNested({ each: true })
   //   @Type(() => TeamMemberDto)
   members: TeamMemberDto[];
 
-  @ApiProperty({ type: 'file', required: false })
+  @ApiProperty({ type: 'file', required: true })
   @Type(() => UploadedFile)
   paymentImage?: Express.Multer.File;
+
+  @ApiProperty({ type: 'string', required: true })
+  @IsString()
+  @IsNotEmpty()
+  sports: string;
 }

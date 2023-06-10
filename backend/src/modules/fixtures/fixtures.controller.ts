@@ -7,9 +7,9 @@ import { MatchFixture } from './entites/fixture-entity';
 import { UserRole, UserRoleEnum } from '@lib/types';
 import { JwtAuthGuard, RolesGuard } from 'src/guards';
 @ApiTags(SWAGGER_API_TAG.FIXTURES)
-@UseGuards(JwtAuthGuard, RolesGuard)
-@UserRole(UserRoleEnum.MEMBER)
-@ApiBearerAuth()
+// @UseGuards(JwtAuthGuard, RolesGuard)
+// @UserRole(UserRoleEnum.MEMBER)
+// @ApiBearerAuth()
 @Controller('fixtures')
 export class FixturesController {
   constructor(private readonly matchFixtureService: FixturesService) {}
