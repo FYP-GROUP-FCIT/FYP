@@ -21,6 +21,11 @@ export class CreateTeamDto {
   @ApiProperty({ type: 'string', required: true })
   @IsString()
   @IsNotEmpty()
+  email: string;
+
+  @ApiProperty({ type: 'string', required: true })
+  @IsString()
+  @IsNotEmpty()
   captainName: string;
 
   @ApiProperty({ type: 'string', required: true })

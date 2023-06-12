@@ -15,6 +15,9 @@ import { CloudinaryConfigService } from '@config/cloudinary.config';
 import { GlobalResponseDto } from '@lib/dtos/common';
 import { Sports } from '../sports/entities/sports.entity';
 import { UpdateRegistrationStatusDto } from '@lib/dtos';
+import { MailService } from '../mail/mail.service';
+import { ConfigEnum, IServerConfig } from '@lib/types';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class RegistrationService {
@@ -26,7 +29,11 @@ export class RegistrationService {
     @InjectRepository(Sports)
     private sportsRepo: Repository<Sports>,
     @Inject(CloudinaryConfigService)
-    private readonly cloudinary: CloudinaryConfigService
+    private readonly cloudinary: CloudinaryConfigService,
+    @Inject(MailService)
+    private readonly mailService: MailService,
+    @Inject(ConfigService)
+    private readonly configService: ConfigService
   ) {}
 
   async getTeamStatus(id: string): Promise<TeamRegistrationStatus> {
@@ -49,8 +56,15 @@ export class RegistrationService {
     paymentImage: Express.Multer.File
   ): Promise<GlobalResponseDto> {
     try {
-      const { teamName, captainName, PhoneNumber, address, members, sports } =
-        createTeamDto;
+      const {
+        teamName,
+        captainName,
+        PhoneNumber,
+        address,
+        members,
+        sports,
+        email,
+      } = createTeamDto;
       const existingSport = await this.sportsRepo.findOne({
         where: {
           sportsName: sports,
@@ -82,6 +96,7 @@ export class RegistrationService {
       registration.address = address;
       registration.status = TeamRegistrationStatus.PENDING;
       registration.sport = existingSport;
+      registration.email = email;
       if (paymentImage) {
         try {
           const res: any = await this.cloudinary.uploadImage(
@@ -122,13 +137,19 @@ export class RegistrationService {
         },
         relations: ['sport'],
       });
-      console.log(foundTeam);
       if (!foundTeam)
         throw new HttpException('Team Not Found!', HttpStatus.NOT_FOUND);
       if (status === TeamRegistrationStatus.APPROVED) {
         foundTeam.status = status;
         await this.registrationRepository.save(foundTeam);
         message = 'Team Approved Successfully!';
+        const { productName, frontendUrl } =
+          this.configService.get<IServerConfig>(ConfigEnum.SERVER);
+        this.mailService.sendVerificationMail(foundTeam.email, {
+          authLoginLink: frontendUrl,
+          firstName: foundTeam.captainName,
+          productName,
+        });
       }
       if (status === TeamRegistrationStatus.REJECTED) {
         foundTeam.status = status;

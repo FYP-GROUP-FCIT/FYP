@@ -27,6 +27,7 @@ import { AddFixturesModule } from './modules/add-fixtures/add-fixtures.module';
 import { SportsModule } from './modules/sports/sports.module';
 import { ResultsModule } from './modules/results/results.module';
 import { InventoryModule } from './modules/inventory/inventory.module';
+import { MailModule } from './modules/mail/mail.module';
 export const typeOrmConfig: TypeOrmModuleOptions = ORMConfig;
 export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
   imports: [ConfigModule],
@@ -52,6 +53,7 @@ export const TypeOrmAsyncConfig: TypeOrmModuleAsyncOptions = {
     SportsModule,
     ResultsModule,
     InventoryModule,
+    MailModule,
   ],
   controllers: [],
   providers: [CloudinaryConfigService],

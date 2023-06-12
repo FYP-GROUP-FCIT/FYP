@@ -7,9 +7,12 @@ import {
 import {
   Body,
   Controller,
+  Get,
   Inject,
+  Param,
   Post,
   Put,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -21,6 +24,7 @@ import { GlobalResponseDto } from '@lib/dtos/common';
 import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { UserRole, UserRoleEnum } from '@lib/types';
+import { Hiring } from './entities/hiring.entity';
 
 @ApiTags(SWAGGER_API_TAG.HIRING)
 @Controller('hiring')
@@ -51,5 +55,15 @@ export class HiringController {
     @Body() body: ShowHiringDto
   ): Promise<GlobalResponseDto> {
     return await this.hiringService.showHideHiring(body);
+  }
+
+  @Get('get-society')
+  async SocietyBody(): Promise<Hiring[]> {
+    return await this.hiringService.getSocietyBody();
+  }
+
+  @Get('get-status')
+  async getStatus(@Param('email') email: string): Promise<Hiring> {
+    return await this.hiringService.getStatus(email);
   }
 }

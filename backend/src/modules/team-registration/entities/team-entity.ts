@@ -22,6 +22,9 @@ export class Teams {
   teamName: string;
 
   @Column()
+  email: string;
+
+  @Column()
   captainName: string;
 
   @Column()

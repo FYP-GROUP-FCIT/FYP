@@ -130,4 +130,31 @@ export class HiringService {
     hiringTable.enable = false;
     await this.hiringTableRepository.save(hiringTable);
   }
+
+  public async getSocietyBody(): Promise<Hiring[]> {
+    try {
+      const res = await this.hiringRepository.findBy({
+        status: HiringStatus.APPROVED,
+      });
+      if (res) {
+        return res;
+      }
+    } catch (error) {
+      throw new HttpException('could not fetch body', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  public async getStatus(email: string): Promise<Hiring> {
+    try {
+      const res = await this.hiringRepository.findOneBy({
+        email,
+      });
+      if (!res) {
+        throw new HttpException('record not found', HttpStatus.NOT_FOUND);
+      }
+      return res;
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
 }
