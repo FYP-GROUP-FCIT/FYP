@@ -1,28 +1,28 @@
-import { IsNotEmpty, isString } from "class-validator";
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { MaterialStatus, MaterialType } from '@lib/types';
+import { IsNotEmpty, isString } from 'class-validator';
+import { User } from 'src/modules/user/entities/user.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-
+@Entity({ name: 'inventory' })
 export class Inventory {
+  @PrimaryGeneratedColumn()
+  readonly id: string;
 
-    @PrimaryGeneratedColumn()
-    readonly id: string;
+  @Column()
+  name: string;
 
+  @Column({ type: 'enum', enum: MaterialType })
+  category: MaterialType;
 
-    @Column()
-    name: string;
+  @Column()
+  quantity: number;
 
-    @Column()
-    category: string;
+  @Column({ type: 'enum', enum: MaterialType })
+  status: MaterialStatus;
 
-    @Column()
-    qunatity: number;
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  issueTo: User;
 
-    @Column()
-    issueTo: string;
-
-    @Column()
-    issueBy: string;
-
-
-
+  @ManyToOne(() => User, { onDelete: 'CASCADE' })
+  issueBy: User;
 }

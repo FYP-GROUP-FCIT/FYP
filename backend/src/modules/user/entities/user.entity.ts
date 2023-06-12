@@ -13,6 +13,7 @@ import { Uuid } from '@lib/utils';
 import { IUserParams, IUser, UserStatusEnum, UserRoleEnum } from '@lib/types';
 import { Hiring } from 'src/modules/hiring/entities/hiring.entity';
 import { Sports } from 'src/modules/sports/entities/sports.entity';
+import { Inventory } from 'src/modules/inventory/entities/inventory.entity';
 
 @Entity({ name: `user` })
 export class User implements IUser {
@@ -77,6 +78,11 @@ export class User implements IUser {
     cascade: true,
   })
   hiring: Hiring;
+
+  @OneToMany(() => Inventory, (inventory) => inventory.issueBy, {
+    cascade: true,
+  })
+  issued: Inventory[];
 
   @CreateDateColumn()
   readonly createdAt: Date;
