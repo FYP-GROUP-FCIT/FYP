@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Registration } from './team-entity';
+import { Teams } from './team-entity';
 
 @Entity()
 export class TeamMember {
@@ -12,6 +12,6 @@ export class TeamMember {
   @Column()
   name: string;
 
-  @ManyToOne(() => Registration, { onDelete: 'CASCADE' })
-  team: Registration;
+  @ManyToOne(() => Teams, { onDelete: 'CASCADE' })
+  team: Teams;
 }

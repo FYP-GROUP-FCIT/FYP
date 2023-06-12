@@ -1,4 +1,4 @@
-import { Registration } from 'src/modules/team-registration/entities/team-entity';
+import { Teams } from 'src/modules/team-registration/entities/team-entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MatchFixture } from '../fixtures/entites/fixture-entity';
@@ -7,7 +7,7 @@ import { AddFixturesService } from './add-fixtures.service';
 import { Sports } from '../sports/entities/sports.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MatchFixture, Registration, Sports])],
+  imports: [TypeOrmModule.forFeature([MatchFixture, Teams, Sports])],
   controllers: [AddFixturesController],
   providers: [AddFixturesService],
 })

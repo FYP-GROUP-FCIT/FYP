@@ -1,6 +1,6 @@
 import { MatchFixture } from 'src/modules/fixtures/entites/fixture-entity';
 import { Sports } from 'src/modules/sports/entities/sports.entity';
-import { Registration } from 'src/modules/team-registration/entities/team-entity';
+import { Teams } from 'src/modules/team-registration/entities/team-entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -15,11 +15,11 @@ export class Result {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @ManyToOne(() => Registration, { onDelete: 'CASCADE' })
-  winnerTeam: Registration;
+  @ManyToOne(() => Teams, { onDelete: 'CASCADE' })
+  winnerTeam: Teams;
 
-  @ManyToOne(() => Registration, { onDelete: 'CASCADE' })
-  loserTeam: Registration;
+  @ManyToOne(() => Teams, { onDelete: 'CASCADE' })
+  loserTeam: Teams;
 
   @Column()
   winnerPoints: number;

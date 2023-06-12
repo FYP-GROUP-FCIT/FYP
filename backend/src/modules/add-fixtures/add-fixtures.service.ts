@@ -8,7 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MatchFixture } from '../fixtures/entites/fixture-entity';
 import { CreateMatchFixtureDto } from './DTO/add-fixture-dto';
-import { Registration } from '../team-registration/entities/team-entity';
+import { Teams } from '../team-registration/entities/team-entity';
 import { Sports } from '../sports/entities/sports.entity';
 import { TeamRegistrationStatus } from '@lib/types/db/entities/team';
 
@@ -17,8 +17,8 @@ export class AddFixturesService {
   constructor(
     @InjectRepository(MatchFixture)
     private readonly matchFixtureRepository: Repository<MatchFixture>,
-    @InjectRepository(Registration)
-    private readonly registrationRepo: Repository<Registration>,
+    @InjectRepository(Teams)
+    private readonly registrationRepo: Repository<Teams>,
     @InjectRepository(Sports)
     private readonly sportsRepo: Repository<Sports>
   ) {}

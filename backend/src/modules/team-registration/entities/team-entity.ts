@@ -14,7 +14,7 @@ import { Sports } from 'src/modules/sports/entities/sports.entity';
 import { Result } from 'src/modules/results/entites/results.entity';
 
 @Entity('registration')
-export class Registration {
+export class Teams {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

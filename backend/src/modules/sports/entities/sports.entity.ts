@@ -12,7 +12,7 @@ import {
 import { HiringStatus } from '@lib/types';
 import { SportsTypeEnum } from '@lib/types/db/entities/sports';
 import { MatchFixture } from 'src/modules/fixtures/entites/fixture-entity';
-import { Registration } from 'src/modules/team-registration/entities/team-entity';
+import { Teams } from 'src/modules/team-registration/entities/team-entity';
 import { Result } from 'src/modules/results/entites/results.entity';
 
 @Entity({ name: `sports` })
@@ -53,10 +53,10 @@ export class Sports {
   })
   matches: MatchFixture[];
 
-  @OneToMany(() => Registration, (registration) => registration.sport, {
+  @OneToMany(() => Teams, (registration) => registration.sport, {
     cascade: true,
   })
-  teams: Registration[];
+  teams: Teams[];
 
   @OneToMany(() => Result, (result) => result.sport, {
     cascade: true,

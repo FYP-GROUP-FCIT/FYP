@@ -4,15 +4,15 @@ import { Repository } from 'typeorm';
 import { MatchFixture } from '../fixtures/entites/fixture-entity';
 import { Result } from './entites/results.entity';
 import { UpdateResultDto } from '@lib/dtos';
-import { Registration } from '../team-registration/entities/team-entity';
+import { Teams } from '../team-registration/entities/team-entity';
 
 @Injectable()
 export class ResultsService {
   constructor(
     @InjectRepository(Result)
     private resultRepository: Repository<Result>,
-    @InjectRepository(Registration)
-    private registrationRepo: Repository<Registration>,
+    @InjectRepository(Teams)
+    private registrationRepo: Repository<Teams>,
     @InjectRepository(MatchFixture)
     private fixtureRepository: Repository<MatchFixture>
   ) {}

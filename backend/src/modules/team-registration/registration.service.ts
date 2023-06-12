@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Registration } from './entities/team-entity';
+import { Teams } from './entities/team-entity';
 import { TeamMember } from './entities/teamMembers';
 import { CreateTeamDto } from '@lib/dtos/team/create-team-dto';
 import { CloudinaryConfigService } from '@config/cloudinary.config';
@@ -19,8 +19,8 @@ import { UpdateRegistrationStatusDto } from '@lib/dtos';
 @Injectable()
 export class RegistrationService {
   constructor(
-    @InjectRepository(Registration)
-    private readonly registrationRepository: Repository<Registration>,
+    @InjectRepository(Teams)
+    private readonly registrationRepository: Repository<Teams>,
     @InjectRepository(TeamMember)
     private teamMemberRepository: Repository<TeamMember>,
     @InjectRepository(Sports)
@@ -67,7 +67,15 @@ export class RegistrationService {
           'Team Already Registered!.',
           HttpStatus.CONFLICT
         );
-      const registration = new Registration();
+      if (
+        members.length < existingSport.minParticipants ||
+        members.length > existingSport.maxParticipants
+      )
+        throw new HttpException(
+          'Must meet team members limit requirement!.',
+          HttpStatus.CONFLICT
+        );
+      const registration = new Teams();
       registration.teamName = teamName;
       registration.captainName = captainName;
       registration.phoneNumber = PhoneNumber;
