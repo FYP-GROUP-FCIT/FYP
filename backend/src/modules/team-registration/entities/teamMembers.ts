@@ -6,7 +6,7 @@ export class TeamMember {
   @PrimaryGeneratedColumn()
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   rollNumber: string;
 
   @Column()

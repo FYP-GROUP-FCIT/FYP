@@ -64,6 +64,14 @@ export class AuthService {
   ): Promise<User | never> {
     const { email, password }: UserRegisterRequestDto = body;
     let user: User = await this.repository.findOne({ where: { email } });
+    let rollUser: User = await this.repository.findOne({
+      where: { rollNumber: body.rollNumber },
+    });
+
+    if (rollUser) {
+      throw new HttpException('User already exit!', HttpStatus.CONFLICT);
+    }
+
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
     if (user) {
       throw new HttpException('User already exit!', HttpStatus.CONFLICT);

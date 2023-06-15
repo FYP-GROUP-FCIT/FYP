@@ -8,18 +8,18 @@ export class HiringStatusChangeDto {
   @IsString()
   userId: string;
 
-  @ApiProperty({ type: String, required: true })
-  @IsNotEmpty()
-  @IsString()
-  email: string;
+  // @ApiProperty({ type: String, required: true })
+  // @IsNotEmpty()
+  // @IsString()
+  // email: string;
 
   @ApiProperty({ required: true, description: 'Approved' })
   @IsNotEmpty()
   @IsEnum(HiringStatus)
   status: HiringStatus;
 
-  @ApiProperty({ type: String, required: true, description: 'Coordinator' })
-  @IsNotEmpty()
-  @IsString()
-  position: string;
+  // @ApiProperty({ type: String, required: true, description: 'Coordinator' })
+  // @IsNotEmpty()
+  // @IsString()
+  // position: string;
 }

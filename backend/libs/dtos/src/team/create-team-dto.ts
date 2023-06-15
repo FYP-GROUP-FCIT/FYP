@@ -29,8 +29,8 @@ export class CreateTeamDto {
   captainName: string;
 
   @ApiProperty({ type: 'string', required: true })
-  @IsNumberString()
-  @Length(11, 14)
+  @IsString()
+  // @Length(11, 14)
   @IsNotEmpty()
   PhoneNumber: string;
 

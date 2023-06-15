@@ -34,7 +34,6 @@ export class User implements IUser {
   @Column({
     length: 30,
     nullable: true,
-    unique: true,
   })
   userName: string;
 
@@ -60,7 +59,7 @@ export class User implements IUser {
   @Column({ nullable: true })
   password?: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, unique: true })
   rollNumber?: string;
 
   @Column({

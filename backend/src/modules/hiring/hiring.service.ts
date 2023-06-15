@@ -10,7 +10,12 @@ import { Repository } from 'typeorm';
 import { Hiring } from './entities/hiring.entity';
 import { GlobalResponseDto } from '@lib/dtos/common';
 import { CloudinaryConfigService } from '@config/cloudinary.config';
-import { ConfigEnum, HiringStatus, IServerConfig } from '@lib/types';
+import {
+  ConfigEnum,
+  HiringStatus,
+  IServerConfig,
+  UserRoleEnum,
+} from '@lib/types';
 import { HiringTable } from './entities/hiringTable.entity';
 import { MailService } from '../mail/mail.service';
 import { ConfigService } from '@nestjs/config';
@@ -77,14 +82,14 @@ export class HiringService {
   }
 
   public async changeStatus({
-    email,
+    userId,
     status,
-    position,
-  }: HiringStatusChangeDto): Promise<GlobalResponseDto> {
+  }: // position,
+  HiringStatusChangeDto): Promise<GlobalResponseDto> {
     try {
       const existingHiring = await this.hiringRepository.findOneBy({
-        email,
-        position,
+        id: userId,
+        // position,
       });
       let message = '';
       if (!existingHiring)
@@ -94,6 +99,9 @@ export class HiringService {
         );
       if (status === HiringStatus.APPROVED) {
         existingHiring.status = HiringStatus.APPROVED;
+        if (existingHiring.position.match('coordinator')) {
+          existingHiring.user.role = UserRoleEnum.COORDINATOR;
+        }
         message = 'Hiring Approved!';
         const { productName, frontendUrl } =
           this.configService.get<IServerConfig>(ConfigEnum.SERVER);

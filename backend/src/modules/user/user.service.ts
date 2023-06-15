@@ -1,7 +1,7 @@
 import { CreateUserDto, UpdateUserDto } from '@lib/dtos';
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import {
   ConfigEnum,
@@ -49,7 +49,11 @@ export class UserService {
   }
 
   async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+    return await this.userRepository.find({
+      where: {
+        role: Not(UserRoleEnum.ADMIN),
+      },
+    });
   }
 
   async findOne(id: string): Promise<User> {
