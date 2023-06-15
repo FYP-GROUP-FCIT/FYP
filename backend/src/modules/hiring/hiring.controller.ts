@@ -71,6 +71,11 @@ export class HiringController {
     return await this.hiringService.getSocietyBody();
   }
 
+  @Get('get-submissions')
+  async getSubmissions(): Promise<Hiring[]> {
+    return await this.hiringService.getSubmissions();
+  }
+
   @Get('get-status/:email')
   async getStatus(@Param('email') email: string): Promise<Hiring> {
     return await this.hiringService.getStatus(email);

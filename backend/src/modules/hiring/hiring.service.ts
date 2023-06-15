@@ -172,6 +172,17 @@ export class HiringService {
     }
   }
 
+  public async getSubmissions(): Promise<Hiring[]> {
+    try {
+      const res = await this.hiringRepository.find();
+      if (res) {
+        return res;
+      }
+    } catch (error) {
+      throw new HttpException('could not fetch body', HttpStatus.BAD_REQUEST);
+    }
+  }
+
   public async getStatus(email: string): Promise<Hiring> {
     try {
       const res = await this.hiringRepository.findOneBy({
