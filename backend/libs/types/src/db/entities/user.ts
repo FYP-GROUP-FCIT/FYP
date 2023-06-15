@@ -33,9 +33,11 @@ export interface IUser {
 }
 
 export interface IUserParams {
-  firstName: string;
-  lastName: string;
+  userName?: string;
+  firstName?: string;
+  lastName?: string;
   email: string;
-  userName: string;
   status?: UserStatusEnum;
+  role?: UserRoleEnum;
+  socialProvide?: SocialProviderEnum;
 }

@@ -63,4 +63,8 @@ export class ResultsService {
   async getFixtures(): Promise<MatchFixture[]> {
     return this.fixtureRepository.find({ relations: ['result'] });
   }
+
+  async getResults(): Promise<Result[]> {
+    return this.resultRepository.find();
+  }
 }

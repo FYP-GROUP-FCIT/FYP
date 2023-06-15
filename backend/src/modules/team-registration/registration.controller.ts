@@ -20,13 +20,14 @@ import { TeamRegistrationStatus } from '@lib/types/db/entities/team';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { GlobalResponseDto } from '@lib/dtos/common';
 import { UpdateRegistrationStatusDto } from '@lib/dtos';
+import { Teams } from './entities/team-entity';
 
 @ApiTags(SWAGGER_API_TAG.REGISTRATION)
 @Controller('registration')
 export class RegistrationController {
   constructor(private registrationService: RegistrationService) {}
 
-  @Get(':id/status')
+  @Get('/:id')
   async getTeamStatus(
     @Param('id') id: string
   ): Promise<TeamRegistrationStatus> {
@@ -50,5 +51,10 @@ export class RegistrationController {
     @Body() updateTeamStatusDto: UpdateRegistrationStatusDto
   ): Promise<GlobalResponseDto> {
     return await this.registrationService.updateStatus(updateTeamStatusDto);
+  }
+
+  @Get()
+  async getTeams(): Promise<Teams[]> {
+    return await this.registrationService.getTeams();
   }
 }

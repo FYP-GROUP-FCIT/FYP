@@ -69,26 +69,27 @@ export class RegistrationService {
         where: {
           sportsName: sports,
         },
-        relations: ['teams'],
+        // relations: ['teams'],
       });
-      if (!existingSport)
-        throw new HttpException('Sport not Found!.', HttpStatus.NOT_FOUND);
-      const existingTeam = existingSport.teams?.find(
-        (team) => team.teamName === teamName
-      );
-      if (existingTeam)
-        throw new HttpException(
-          'Team Already Registered!.',
-          HttpStatus.CONFLICT
-        );
-      if (
-        members.length < existingSport.minParticipants ||
-        members.length > existingSport.maxParticipants
-      )
-        throw new HttpException(
-          'Must meet team members limit requirement!.',
-          HttpStatus.CONFLICT
-        );
+      console.log(createTeamDto);
+      // if (!existingSport)
+      //   throw new HttpException('Sport not Found!.', HttpStatus.NOT_FOUND);
+      // const existingTeam = existingSport.teams?.find(
+      //   (team) => team.teamName === teamName
+      // );
+      // if (existingTeam)
+      //   throw new HttpException(
+      //     'Team Already Registered!.',
+      //     HttpStatus.CONFLICT
+      //   );
+      // if (
+      //   members.length < existingSport.minParticipants ||
+      //   members.length > existingSport.maxParticipants
+      // )
+      //   throw new HttpException(
+      //     'Must meet team members limit requirement!.',
+      //     HttpStatus.CONFLICT
+      //   );
       const registration = new Teams();
       registration.teamName = teamName;
       registration.captainName = captainName;
@@ -158,6 +159,20 @@ export class RegistrationService {
         message = 'Team Rejected Successfully!';
       }
       return new GlobalResponseDto(message);
+    } catch (error) {
+      throw new HttpException(error.message, error.status);
+    }
+  }
+
+  async getTeams(): Promise<Teams[]> {
+    try {
+      const res = await this.registrationRepository.find();
+      if (!res)
+        throw new HttpException(
+          'could not fetch teams',
+          HttpStatus.BAD_REQUEST
+        );
+      return res;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

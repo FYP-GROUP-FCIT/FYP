@@ -33,7 +33,7 @@ export class User implements IUser {
 
   @Column({
     length: 30,
-    nullable: false,
+    nullable: true,
     unique: true,
   })
   userName: string;
@@ -55,10 +55,13 @@ export class User implements IUser {
     length: 100,
     nullable: false,
   })
-  readonly email: string;
+  email: string;
 
   @Column({ nullable: true })
   password?: string;
+
+  @Column({ nullable: true })
+  rollNumber?: string;
 
   @Column({
     type: `enum`,
@@ -70,9 +73,9 @@ export class User implements IUser {
   @Column({
     type: `enum`,
     enum: UserRoleEnum,
-    default: UserRoleEnum.MEMBER,
+    // default: UserRoleEnum.MEMBER,
   })
-  role: UserRoleEnum = UserRoleEnum.MEMBER;
+  role: UserRoleEnum;
 
   @OneToMany(() => Hiring, (hiring) => hiring.user, {
     cascade: true,
@@ -101,6 +104,10 @@ export class User implements IUser {
 
   setFirstName(firstName: string) {
     this.firstName = firstName;
+  }
+
+  setRole(role: UserRoleEnum) {
+    this.role = role;
   }
 
   setLastName(lastName: string) {

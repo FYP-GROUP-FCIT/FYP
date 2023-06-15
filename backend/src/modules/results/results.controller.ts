@@ -20,4 +20,8 @@ export class ResultsController {
   async getFixtures(): Promise<MatchFixture[]> {
     return this.resultService.getFixtures();
   }
+  @Get()
+  async getResults(): Promise<Result[]> {
+    return this.resultService.getResults();
+  }
 }

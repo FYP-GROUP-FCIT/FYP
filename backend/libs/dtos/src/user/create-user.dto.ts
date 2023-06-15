@@ -67,3 +67,43 @@ export class CreateUserDto {
   @Type(() => UploadedFile)
   file: Express.Multer.File;
 }
+
+export class UserRegisterRequestDto {
+  @IsNotEmpty()
+  @IsString()
+  @MaxLength(30, {
+    message: 'Last Name length must be less than 30',
+  })
+  @ApiProperty({ example: 'Smith', description: 'Last Name of user' })
+  public readonly userName: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  @ApiProperty({
+    example: 'john.smith@demo.com',
+    description: 'Email of the user',
+  })
+  public readonly email: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(7, {
+    message: 'Password must be at least 7 characters long',
+  })
+  @ApiProperty({
+    example: 'password',
+    description: 'Password for user. Must be 7 characters long.',
+  })
+  password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(7, {
+    message: 'Password must be at least 7 characters long',
+  })
+  @ApiProperty({
+    example: 'password',
+    description: 'Password for user. Must be 7 characters long.',
+  })
+  rollNumber: string;
+}

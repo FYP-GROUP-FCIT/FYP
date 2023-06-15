@@ -16,6 +16,7 @@ export class FixturesController {
 
   @Get()
   async getFixtures(): Promise<MatchFixture[]> {
+    // console.log();
     return await this.matchFixtureService.getCurrentAndNextDayFixtures();
   }
 }

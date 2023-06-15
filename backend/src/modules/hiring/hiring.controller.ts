@@ -25,6 +25,7 @@ import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/guards/roles.guard';
 import { UserRole, UserRoleEnum } from '@lib/types';
 import { Hiring } from './entities/hiring.entity';
+import { HiringTable } from './entities/hiringTable.entity';
 
 @ApiTags(SWAGGER_API_TAG.HIRING)
 @Controller('hiring')
@@ -50,11 +51,19 @@ export class HiringController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @UserRole(UserRoleEnum.ADMIN)
   @ApiBearerAuth()
-  @Put('show-hiring')
+  @Put('show-hide-hiring')
   async showHideHiring(
     @Body() body: ShowHiringDto
   ): Promise<GlobalResponseDto> {
     return await this.hiringService.showHideHiring(body);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @UserRole(UserRoleEnum.ADMIN)
+  @ApiBearerAuth()
+  @Get('show-hiring')
+  async showHiring(): Promise<HiringTable[]> {
+    return await this.hiringService.showHiring();
   }
 
   @Get('get-society')
@@ -62,7 +71,7 @@ export class HiringController {
     return await this.hiringService.getSocietyBody();
   }
 
-  @Get('get-status')
+  @Get('get-status/:email')
   async getStatus(@Param('email') email: string): Promise<Hiring> {
     return await this.hiringService.getStatus(email);
   }
